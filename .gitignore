@@ -1,0 +1,26 @@
+# Dossiers générés automatiquement
+node_modules/
+dist/
+coverage/
+
+# Fichiers sensibles
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# Fichiers de build ou de déploiement
+build/
+out/
+*.log
+
+# Fichiers temporaires
+*.tmp
+
+# Fichiers spécifiques à Visual Studio Code
+.vscode/
+
+# Fichiers de configuration locaux
+.editorconfig

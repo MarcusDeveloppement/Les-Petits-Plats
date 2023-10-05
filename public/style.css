@@ -1,0 +1,85 @@
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+header {
+  background-image: url(../assets/img/header_P7.png);
+  background-size: 100%;
+  background-position: center center;
+  width: 100%;
+  height: 667px;
+}
+header img {
+  width: 207px;
+  height: 25.26px;
+  margin-top: 51px;
+  margin-left: 69px;
+}
+header h1 {
+  color: #ffd15b;
+  text-align: center;
+  font-family: "Anton", sans-serif;
+  width: 730px;
+  font-size: 2.8rem;
+  margin-top: 10rem;
+  line-height: 4rem;
+}
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* barre de recherche  */
+.search-container {
+  position: relative;
+  width: 930px;
+  height: 65px;
+}
+
+.search-input {
+  padding: 10px 40px 10px 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 70%;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #1b1b1b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.search-button i {
+  font-size: 1.6rem;
+}
+
+/* Main style */
+main {
+  margin: 0 5rem;
+}
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.filter-container h3 {
+  font-family: "anton";
+}
+
+#filters {
+  display: flex;
+  gap: 3rem;
+}
