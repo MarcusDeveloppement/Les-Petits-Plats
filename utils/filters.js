@@ -1,13 +1,13 @@
-let recipes = []; // Déclarez une variable pour stocker les recettes
+let recipes = [];
 
 async function getFilterJson() {
   try {
-    const response = await fetch("data/recipes.json"); // Assurez-vous que le chemin du fichier JSON est correct
+    const response = await fetch("data/recipes.json");
     const data = await response.json();
-    recipes = data.recipes; // Stockez les recettes dans la variable recipes
+    recipes = data.recipes;
     filterIngredients();
     filterAppliances();
-    filterUstensils(); // Appelez la fonction de filtrage des ingrédients, appareils et ustensiles après avoir obtenu les données
+    filterUstensils();
   } catch (error) {
     console.error(
       "Erreur lors de la récupération ou du traitement des données :",
@@ -20,7 +20,6 @@ function filterIngredients() {
   const filterIngredients = document.querySelector(".filter-ingredients");
   const allIngredients = new Set();
 
-  // Parcourez toutes les recettes pour extraire les ingrédients uniques
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredientObj) => {
       allIngredients.add(ingredientObj.ingredient);
@@ -30,7 +29,6 @@ function filterIngredients() {
   const dropMenu = document.createElement("select");
   dropMenu.className = "drop-select";
 
-  // Ajoutez une option par ingrédient unique au menu déroulant
   allIngredients.forEach((ingredient) => {
     const optionDrop = document.createElement("option");
     optionDrop.value = ingredient;
@@ -38,10 +36,7 @@ function filterIngredients() {
     dropMenu.appendChild(optionDrop);
   });
 
-  // Ajoutez le menu déroulant à l'élément avec la classe "filter-ingredients"
   filterIngredients.appendChild(dropMenu);
-
-  // Ajoutez un gestionnaire d'événements "change" pour le menu déroulant
   dropMenu.addEventListener("change", function () {
     filterRecipes();
   });
@@ -51,9 +46,8 @@ function filterAppliances() {
   const filterAppliances = document.querySelector(".filter-appliances");
   const allAppliances = new Set();
 
-  // Parcourez toutes les recettes pour extraire les appareils uniques
   recipes.forEach((recipe) => {
-    allAppliances.add(recipe.appliance); // Utilisez la propriété 'appliance' pour les appareils
+    allAppliances.add(recipe.appliance);
   });
 
   const dropMenu = document.createElement("select");
@@ -67,10 +61,7 @@ function filterAppliances() {
     dropMenu.appendChild(optionDrop);
   });
 
-  // Ajoutez le menu déroulant à l'élément avec la classe "filter-appliances"
   filterAppliances.appendChild(dropMenu);
-
-  // Ajoutez un gestionnaire d'événements "change" pour le menu déroulant
   dropMenu.addEventListener("change", function () {
     filterRecipes();
   });
@@ -80,7 +71,6 @@ function filterUstensils() {
   const filterUstensils = document.querySelector(".filter-ustensils");
   const allUstensils = new Set();
 
-  // Parcourez toutes les recettes pour extraire les ustensiles uniques
   recipes.forEach((recipe) => {
     recipe.ustensils.forEach((ustensil) => {
       allUstensils.add(ustensil);
@@ -90,18 +80,13 @@ function filterUstensils() {
   const dropMenu = document.createElement("select");
   dropMenu.className = "drop-select";
 
-  // Ajoutez une option par ustensile unique au menu déroulant
   allUstensils.forEach((ustensil) => {
     const optionDrop = document.createElement("option");
     optionDrop.value = ustensil;
     optionDrop.text = ustensil;
     dropMenu.appendChild(optionDrop);
   });
-
-  // Ajoutez le menu déroulant à l'élément avec la classe "filter-ustensils"
   filterUstensils.appendChild(dropMenu);
-
-  // Ajoutez un gestionnaire d'événements "change" pour le menu déroulant
   dropMenu.addEventListener("change", function () {
     filterRecipes();
   });
@@ -145,4 +130,4 @@ function filterRecipes() {
   });
 }
 
-getFilterJson(); // Appelez la fonction pour obtenir les données JSON et initialiser le filtre
+getFilterJson();
