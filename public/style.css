@@ -169,3 +169,36 @@ h4 {
   border-radius: 50px;
   font-size: 0.8rem;
 }
+
+.custom-ul {
+  list-style-type: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-li {
+  padding: 8px;
+  cursor: pointer;
+  display: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.title-ingredient {
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}

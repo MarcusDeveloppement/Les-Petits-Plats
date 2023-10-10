@@ -26,20 +26,49 @@ function filterIngredients() {
     });
   });
 
-  const dropMenu = document.createElement("select");
-  dropMenu.className = "drop-select";
+  const ulIngredients = document.createElement("ul");
+  ulIngredients.className = "custom-ul";
+
+  const titleIngredient = document.createElement("h4");
+  titleIngredient.className = "title-ingredient";
+  titleIngredient.textContent = "Ingrédients";
+  ulIngredients.appendChild(titleIngredient);
+
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Recherche d'ingrédients";
+  searchInput.className = "search-input";
+  ulIngredients.appendChild(searchInput);
+
+  function filterList() {
+    const inputValue = searchInput.value.toLowerCase();
+    const liElements = ulIngredients.querySelectorAll(".custom-li");
+
+    liElements.forEach((li) => {
+      const ingredient = li.textContent.toLowerCase();
+      if (ingredient.includes(inputValue)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  }
+
+  searchInput.addEventListener("input", filterList);
 
   allIngredients.forEach((ingredient) => {
-    const optionDrop = document.createElement("option");
-    optionDrop.value = ingredient;
-    optionDrop.text = ingredient;
-    dropMenu.appendChild(optionDrop);
+    const liIngredient = document.createElement("li");
+    liIngredient.className = "custom-li";
+    liIngredient.textContent = ingredient;
+    ulIngredients.appendChild(liIngredient);
   });
 
-  filterIngredients.appendChild(dropMenu);
-  dropMenu.addEventListener("change", function () {
-    filterRecipes();
-  });
+  filterIngredients.appendChild(ulIngredients);
+  function toggleIngredientList() {
+    ulIngredients.classList.toggle("visible");
+  }
+
+  titleIngredient.addEventListener("click", toggleIngredientList);
 }
 
 function filterAppliances() {
@@ -53,18 +82,18 @@ function filterAppliances() {
   const dropMenu = document.createElement("select");
   dropMenu.className = "drop-select";
 
-  // Ajoutez une option par appareil unique au menu déroulant
+  const optionTitle = document.createElement("option");
+  optionTitle.value = "";
+  optionTitle.text = "Appareils";
+  dropMenu.appendChild(optionTitle);
+
   allAppliances.forEach((appliance) => {
     const optionDrop = document.createElement("option");
     optionDrop.value = appliance;
     optionDrop.text = appliance;
     dropMenu.appendChild(optionDrop);
   });
-
   filterAppliances.appendChild(dropMenu);
-  dropMenu.addEventListener("change", function () {
-    filterRecipes();
-  });
 }
 
 function filterUstensils() {
@@ -80,54 +109,56 @@ function filterUstensils() {
   const dropMenu = document.createElement("select");
   dropMenu.className = "drop-select";
 
+  const searchInput = document.createElement("option");
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Recherche";
+  searchInput.appendChild(input);
+  dropMenu.appendChild(searchInput);
+
+  const optionTitle = document.createElement("option");
+  optionTitle.value = "";
+  optionTitle.text = "Ustensiles";
+  dropMenu.appendChild(optionTitle);
+
   allUstensils.forEach((ustensil) => {
     const optionDrop = document.createElement("option");
     optionDrop.value = ustensil;
     optionDrop.text = ustensil;
     dropMenu.appendChild(optionDrop);
   });
+
   filterUstensils.appendChild(dropMenu);
-  dropMenu.addEventListener("change", function () {
-    filterRecipes();
-  });
 }
 
-function filterRecipes() {
-  const selectedIngredient = document.querySelector(
-    ".filter-ingredients .drop-select"
-  ).value;
-  const selectedAppliance = document.querySelector(
-    ".filter-appliances .drop-select"
-  ).value;
-  const selectedUstensil = document.querySelector(
-    ".filter-ustensils .drop-select"
-  ).value;
-  const recipeContainers = document.querySelectorAll(".recipe");
+function tags() {
+  const ingredientsDropdown = document.querySelector(".filter-ingredients");
+  const appliancesDropdown = document.querySelector(".filter-appliances");
+  const ustensilsDropdown = document.querySelector(".filter-ustensils");
+  const tagsSelectedContainer = document.getElementById("tags-selected");
 
-  recipeContainers.forEach((recipeContainer) => {
-    const ingredientSelect = recipeContainer.querySelector(
-      ".filter-ingredients .drop-select"
-    );
-    const applianceSelect = recipeContainer.querySelector(
-      ".filter-appliances .drop-select"
-    );
-    const ustensilSelect = recipeContainer.querySelector(
-      ".filter-ustensils .drop-select"
-    );
-    const recipeIngredient = ingredientSelect.value;
-    const recipeAppliance = applianceSelect.value;
-    const recipeUstensil = ustensilSelect.value;
+  ingredientsDropdown.addEventListener("change", createTag);
+  appliancesDropdown.addEventListener("change", createTag);
+  ustensilsDropdown.addEventListener("change", createTag);
 
-    if (
-      (selectedIngredient === "" || selectedIngredient === recipeIngredient) &&
-      (selectedAppliance === "" || selectedAppliance === recipeAppliance) &&
-      (selectedUstensil === "" || selectedUstensil === recipeUstensil)
-    ) {
-      recipeContainer.style.display = "block";
-    } else {
-      recipeContainer.style.display = "none";
+  function createTag(event) {
+    const selectedValue = event.target.value;
+    if (selectedValue) {
+      const tag = document.createElement("div");
+      tag.className = "tag";
+      tag.textContent = selectedValue;
+      const removeButton = document.createElement("button");
+      removeButton.className = "remove-tag-button";
+      removeButton.textContent = "X";
+      removeButton.addEventListener("click", () => {
+        tagsSelectedContainer.removeChild(tag);
+      });
+      tag.appendChild(removeButton);
+      tagsSelectedContainer.appendChild(tag);
+      event.target.value = "";
     }
-  });
+  }
 }
 
 getFilterJson();
+tags();

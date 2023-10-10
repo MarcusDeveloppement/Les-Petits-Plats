@@ -1,4 +1,4 @@
-async function getDataJson() {
+export async function getDataJson() {
   const response = await fetch("data/recipes.json");
   const data = await response.json();
   const recipes = data.recipes;
