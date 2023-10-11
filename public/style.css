@@ -75,6 +75,7 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .filter-container h3 {
@@ -90,7 +91,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 67px;
 }
 
 .global {
@@ -170,35 +171,94 @@ h4 {
   font-size: 0.8rem;
 }
 
+.filter-ingredients,
+.filter-appliances,
+.filter-ustensils {
+  width: 200px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10px;
+}
 .custom-ul {
+  position: absolute !important;
+  z-index: 5;
   list-style-type: none;
   padding: 0;
   max-height: 200px;
-  overflow-y: scroll;
   border: 1px solid #ccc;
   position: relative;
-  overflow: hidden;
+  display: none;
+  width: 200px;
+  border: none;
+  overflow-y: scroll;
+  background-color: #fff;
+  border-radius: 0 0 10px 10px;
 }
 
 .custom-li {
   padding: 8px;
   cursor: pointer;
-  display: none;
 }
 
-.search-input {
+.custom-li:hover {
+  background-color: #ffd15b;
+  width: 100%;
+}
+
+.custom-ul input {
   width: 100%;
   padding: 8px;
-  border: none;
-  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
+  margin-left: 0.1rem;
   margin-bottom: 10px;
   position: sticky;
   top: 0;
   background-color: #fff;
+  width: 180px;
+  font-size: 0.9rem;
 }
 
-.title-ingredient {
+.title-ingredient,
+.title-appliance,
+.title-ustensil {
   font-weight: bold;
-  position: sticky;
-  top: 0;
+  color: #1b1b1b;
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.visible {
+  display: block;
+}
+
+.tag {
+  background-color: #ffd15b;
+  width: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+#tags-selected {
+  gap: 5px;
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.remove-tag-button {
+  border: none;
+  background-color: #1b1b1b;
+  border-radius: 60%;
+  color: #ffd15b;
+  height: 21px;
+  display: flex;
+  align-items: center;
 }

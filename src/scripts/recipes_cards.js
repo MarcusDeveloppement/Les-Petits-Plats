@@ -8,6 +8,12 @@ export async function getDataJson() {
 
     const globalDiv = document.createElement("div");
     globalDiv.className = "global";
+    globalDiv.setAttribute(
+      "data-ingredients",
+      JSON.stringify(cards.ingredients)
+    );
+    globalDiv.setAttribute("data-appliances", JSON.stringify(cards.appliances));
+    globalDiv.setAttribute("data-ustensils", JSON.stringify(cards.ustensils));
 
     const imgElem = document.createElement("img");
     imgElem.src = `assets/photos/${cards.image}`;

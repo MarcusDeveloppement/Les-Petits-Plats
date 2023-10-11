@@ -26,20 +26,19 @@ function filterIngredients() {
     });
   });
 
+  // Créez une liste non ordonnée (ul) pour les ingrédients
   const ulIngredients = document.createElement("ul");
   ulIngredients.className = "custom-ul";
+  ulIngredients.id = "mes-ingredients";
 
-  const titleIngredient = document.createElement("h4");
-  titleIngredient.className = "title-ingredient";
-  titleIngredient.textContent = "Ingrédients";
-  ulIngredients.appendChild(titleIngredient);
-
+  // Ajoutez un champ de recherche
   const searchInput = document.createElement("input");
   searchInput.type = "text";
-  searchInput.placeholder = "Recherche d'ingrédients";
+  searchInput.placeholder = "Recherche";
   searchInput.className = "search-input";
   ulIngredients.appendChild(searchInput);
 
+  // Fonction pour filtrer les ingrédients en fonction de la saisie utilisateur
   function filterList() {
     const inputValue = searchInput.value.toLowerCase();
     const liElements = ulIngredients.querySelectorAll(".custom-li");
@@ -54,8 +53,10 @@ function filterIngredients() {
     });
   }
 
+  // Écoutez les changements dans le champ de recherche
   searchInput.addEventListener("input", filterList);
 
+  // Ajoutez les ingrédients sous forme d'éléments de liste (li)
   allIngredients.forEach((ingredient) => {
     const liIngredient = document.createElement("li");
     liIngredient.className = "custom-li";
@@ -63,12 +64,22 @@ function filterIngredients() {
     ulIngredients.appendChild(liIngredient);
   });
 
+  // Ajoutez la liste d'ingrédients au conteneur de filtre
   filterIngredients.appendChild(ulIngredients);
+
+  // Fonction pour afficher/cacher la liste d'ingrédients
   function toggleIngredientList() {
     ulIngredients.classList.toggle("visible");
   }
 
+  // Créez un titre "Ingrédients" (h4) et ajoutez un écouteur de clic
+  const titleIngredient = document.createElement("h4");
+  titleIngredient.className = "title-ingredient";
+  titleIngredient.innerHTML = `Ingrédients <span><i class="fa-solid fa-chevron-down"></i></span>`;
   titleIngredient.addEventListener("click", toggleIngredientList);
+
+  // Ajoutez le titre comme premier enfant de filterIngredients
+  filterIngredients.insertBefore(titleIngredient, ulIngredients);
 }
 
 function filterAppliances() {
@@ -79,21 +90,49 @@ function filterAppliances() {
     allAppliances.add(recipe.appliance);
   });
 
-  const dropMenu = document.createElement("select");
-  dropMenu.className = "drop-select";
+  const ulAppliances = document.createElement("ul");
+  ulAppliances.className = "custom-ul";
+  ulAppliances.id = "mes-appareils";
 
-  const optionTitle = document.createElement("option");
-  optionTitle.value = "";
-  optionTitle.text = "Appareils";
-  dropMenu.appendChild(optionTitle);
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Recherche d'appareils";
+  searchInput.className = "search-input";
+  ulAppliances.appendChild(searchInput);
+
+  function filterList() {
+    const inputValue = searchInput.value.toLowerCase();
+    const liElements = ulAppliances.querySelectorAll(".custom-li");
+
+    liElements.forEach((li) => {
+      const appliance = li.textContent.toLowerCase();
+      if (appliance.includes(inputValue)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  }
+  searchInput.addEventListener("input", filterList);
 
   allAppliances.forEach((appliance) => {
-    const optionDrop = document.createElement("option");
-    optionDrop.value = appliance;
-    optionDrop.text = appliance;
-    dropMenu.appendChild(optionDrop);
+    const liAppliance = document.createElement("li");
+    liAppliance.className = "custom-li";
+    liAppliance.textContent = appliance;
+    ulAppliances.appendChild(liAppliance);
   });
-  filterAppliances.appendChild(dropMenu);
+  filterAppliances.appendChild(ulAppliances);
+
+  function toggleApplianceList() {
+    ulAppliances.classList.toggle("visible");
+  }
+
+  const titleAppliance = document.createElement("h4");
+  titleAppliance.className = "title-appliance";
+  titleAppliance.innerHTML = `Appareils <span><i class="fa-solid fa-chevron-down"></i></span>`;
+  titleAppliance.addEventListener("click", toggleApplianceList);
+
+  filterAppliances.insertBefore(titleAppliance, ulAppliances);
 }
 
 function filterUstensils() {
@@ -106,29 +145,50 @@ function filterUstensils() {
     });
   });
 
-  const dropMenu = document.createElement("select");
-  dropMenu.className = "drop-select";
+  const ulUstensils = document.createElement("ul");
+  ulUstensils.className = "custom-ul";
+  ulUstensils.id = "mes-ustensils";
 
-  const searchInput = document.createElement("option");
-  const input = document.createElement("input");
-  input.type = "text";
-  input.placeholder = "Recherche";
-  searchInput.appendChild(input);
-  dropMenu.appendChild(searchInput);
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Recherche";
+  searchInput.className = "search-input";
+  ulUstensils.appendChild(searchInput);
 
-  const optionTitle = document.createElement("option");
-  optionTitle.value = "";
-  optionTitle.text = "Ustensiles";
-  dropMenu.appendChild(optionTitle);
+  function filterList() {
+    const inputValue = searchInput.value.toLowerCase();
+    const liElements = ulUstensils.querySelectorAll(".custom-li");
+
+    liElements.forEach((li) => {
+      const ustensil = li.textContent.toLowerCase();
+      if (ustensil.includes(inputValue)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  }
+  searchInput.addEventListener("input", filterList);
 
   allUstensils.forEach((ustensil) => {
-    const optionDrop = document.createElement("option");
-    optionDrop.value = ustensil;
-    optionDrop.text = ustensil;
-    dropMenu.appendChild(optionDrop);
+    const liUstensil = document.createElement("li");
+    liUstensil.className = "custom-li";
+    liUstensil.textContent = ustensil;
+    ulUstensils.appendChild(liUstensil);
   });
 
-  filterUstensils.appendChild(dropMenu);
+  filterUstensils.appendChild(ulUstensils);
+
+  function toggleUstensilList() {
+    ulUstensils.classList.toggle("visible");
+  }
+
+  const titleUstensil = document.createElement("h4");
+  titleUstensil.className = "title-ustensil";
+  titleUstensil.innerHTML = `Ingrédients <span><i class="fa-solid fa-chevron-down"></i></span>`;
+  titleUstensil.addEventListener("click", toggleUstensilList);
+
+  filterUstensils.insertBefore(titleUstensil, ulUstensils);
 }
 
 function tags() {
@@ -137,25 +197,26 @@ function tags() {
   const ustensilsDropdown = document.querySelector(".filter-ustensils");
   const tagsSelectedContainer = document.getElementById("tags-selected");
 
-  ingredientsDropdown.addEventListener("change", createTag);
-  appliancesDropdown.addEventListener("change", createTag);
-  ustensilsDropdown.addEventListener("change", createTag);
+  ingredientsDropdown.addEventListener("click", createTag);
+  appliancesDropdown.addEventListener("click", createTag);
+  ustensilsDropdown.addEventListener("click", createTag);
 
   function createTag(event) {
-    const selectedValue = event.target.value;
-    if (selectedValue) {
-      const tag = document.createElement("div");
-      tag.className = "tag";
-      tag.textContent = selectedValue;
-      const removeButton = document.createElement("button");
-      removeButton.className = "remove-tag-button";
-      removeButton.textContent = "X";
-      removeButton.addEventListener("click", () => {
-        tagsSelectedContainer.removeChild(tag);
-      });
-      tag.appendChild(removeButton);
-      tagsSelectedContainer.appendChild(tag);
-      event.target.value = "";
+    if (event.target.classList.contains("custom-li")) {
+      const selectedValue = event.target.textContent;
+      if (selectedValue) {
+        const tag = document.createElement("div");
+        tag.className = "tag";
+        tag.textContent = selectedValue;
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-tag-button";
+        removeButton.textContent = "X";
+        removeButton.addEventListener("click", () => {
+          tagsSelectedContainer.removeChild(tag);
+        });
+        tag.appendChild(removeButton);
+        tagsSelectedContainer.appendChild(tag);
+      }
     }
   }
 }

@@ -7,13 +7,14 @@ search.addEventListener("keyup", (e) => {
 });
 
 function filterElem(letter, elements) {
-  if (letter.length > 2) {
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].textContent.toLowerCase().includes(letter)) {
-        elements[i].style.display = "block";
-      } else {
-        elements[i].style.display = "none";
-      }
+  for (let i = 0; i < elements.length; i++) {
+    if (
+      letter.length === 0 ||
+      elements[i].textContent.toLowerCase().includes(letter)
+    ) {
+      elements[i].style.display = "block";
+    } else {
+      elements[i].style.display = "none";
     }
   }
 }
