@@ -8,12 +8,9 @@ export async function getDataJson() {
 
     const globalDiv = document.createElement("div");
     globalDiv.className = "global";
-    globalDiv.setAttribute(
-      "data-ingredients",
-      JSON.stringify(cards.ingredients)
-    );
-    globalDiv.setAttribute("data-appliances", JSON.stringify(cards.appliances));
-    globalDiv.setAttribute("data-ustensils", JSON.stringify(cards.ustensils));
+    globalDiv.setAttribute("data-category", JSON.stringify(cards.ingredients));
+    globalDiv.setAttribute("data-category", JSON.stringify(cards.appliances));
+    globalDiv.setAttribute("data-category", JSON.stringify(cards.ustensils));
 
     const imgElem = document.createElement("img");
     imgElem.src = `assets/photos/${cards.image}`;
@@ -23,6 +20,7 @@ export async function getDataJson() {
     timer.className += "timer_card";
 
     const detailsDiv = document.createElement("div");
+    detailsDiv.className = "global-text";
 
     const titleCard = document.createElement("h2");
     titleCard.innerText = cards.name;
@@ -37,6 +35,7 @@ export async function getDataJson() {
     titleIngredient.innerText = "INGRÉDIENTS";
 
     const ingredientList = document.createElement("ul");
+    ingredientList.className = "global-ing";
 
     for (const ingredient of cards.ingredients) {
       const ingredientItem = document.createElement("li");

@@ -1,3 +1,5 @@
+import { filterTagsSelected } from "../src/scripts/index.js";
+
 let recipes = [];
 
 async function getFilterJson() {
@@ -26,19 +28,16 @@ function filterIngredients() {
     });
   });
 
-  // Créez une liste non ordonnée (ul) pour les ingrédients
   const ulIngredients = document.createElement("ul");
   ulIngredients.className = "custom-ul";
   ulIngredients.id = "mes-ingredients";
 
-  // Ajoutez un champ de recherche
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Recherche";
   searchInput.className = "search-input";
   ulIngredients.appendChild(searchInput);
 
-  // Fonction pour filtrer les ingrédients en fonction de la saisie utilisateur
   function filterList() {
     const inputValue = searchInput.value.toLowerCase();
     const liElements = ulIngredients.querySelectorAll(".custom-li");
@@ -53,10 +52,8 @@ function filterIngredients() {
     });
   }
 
-  // Écoutez les changements dans le champ de recherche
   searchInput.addEventListener("input", filterList);
 
-  // Ajoutez les ingrédients sous forme d'éléments de liste (li)
   allIngredients.forEach((ingredient) => {
     const liIngredient = document.createElement("li");
     liIngredient.className = "custom-li";
@@ -64,22 +61,33 @@ function filterIngredients() {
     ulIngredients.appendChild(liIngredient);
   });
 
-  // Ajoutez la liste d'ingrédients au conteneur de filtre
   filterIngredients.appendChild(ulIngredients);
 
-  // Fonction pour afficher/cacher la liste d'ingrédients
   function toggleIngredientList() {
     ulIngredients.classList.toggle("visible");
   }
 
-  // Créez un titre "Ingrédients" (h4) et ajoutez un écouteur de clic
   const titleIngredient = document.createElement("h4");
   titleIngredient.className = "title-ingredient";
   titleIngredient.innerHTML = `Ingrédients <span><i class="fa-solid fa-chevron-down"></i></span>`;
   titleIngredient.addEventListener("click", toggleIngredientList);
 
-  // Ajoutez le titre comme premier enfant de filterIngredients
   filterIngredients.insertBefore(titleIngredient, ulIngredients);
+
+  //************************** style effect on click*************************
+  const test = document.querySelector(".title-ingredient");
+  const div = document.querySelector(".filter-ingredients");
+  let isRounded = false;
+
+  test.addEventListener("click", function () {
+    if (isRounded) {
+      div.style.borderRadius = "10px";
+    } else {
+      div.style.borderRadius = "10px 10px 0 0";
+    }
+    isRounded = !isRounded;
+  });
+  filterTagsSelected();
 }
 
 function filterAppliances() {
@@ -133,9 +141,23 @@ function filterAppliances() {
   titleAppliance.addEventListener("click", toggleApplianceList);
 
   filterAppliances.insertBefore(titleAppliance, ulAppliances);
+
+  // **************************style effect on click***************************
+  const test = document.querySelector(".title-appliance");
+  const div = document.querySelector(".filter-appliances");
+  let isRounded = false;
+
+  test.addEventListener("click", function () {
+    if (isRounded) {
+      div.style.borderRadius = "10px";
+    } else {
+      div.style.borderRadius = "10px 10px 0 0";
+    }
+    isRounded = !isRounded;
+  });
 }
 
-function filterUstensils() {
+export function filterUstensils() {
   const filterUstensils = document.querySelector(".filter-ustensils");
   const allUstensils = new Set();
 
@@ -185,13 +207,27 @@ function filterUstensils() {
 
   const titleUstensil = document.createElement("h4");
   titleUstensil.className = "title-ustensil";
-  titleUstensil.innerHTML = `Ingrédients <span><i class="fa-solid fa-chevron-down"></i></span>`;
+  titleUstensil.innerHTML = `Ustensiles <span><i class="fa-solid fa-chevron-down"></i></span>`;
   titleUstensil.addEventListener("click", toggleUstensilList);
 
   filterUstensils.insertBefore(titleUstensil, ulUstensils);
+
+  // ********************style effect on click************************
+  const test = document.querySelector(".title-ustensil");
+  const div = document.querySelector(".filter-ustensils");
+  let isRounded = false;
+
+  test.addEventListener("click", function () {
+    if (isRounded) {
+      div.style.borderRadius = "10px";
+    } else {
+      div.style.borderRadius = "10px 10px 0 0";
+    }
+    isRounded = !isRounded;
+  });
 }
 
-function tags() {
+export function tags() {
   const ingredientsDropdown = document.querySelector(".filter-ingredients");
   const appliancesDropdown = document.querySelector(".filter-appliances");
   const ustensilsDropdown = document.querySelector(".filter-ustensils");
@@ -207,16 +243,31 @@ function tags() {
       if (selectedValue) {
         const tag = document.createElement("div");
         tag.className = "tag";
-        tag.textContent = selectedValue;
+        tag.innerHTML = `${selectedValue} `;
         const removeButton = document.createElement("button");
         removeButton.className = "remove-tag-button";
-        removeButton.textContent = "X";
+        removeButton.innerHTML = `<i class="fa-solid fa-x"></i>`;
         removeButton.addEventListener("click", () => {
           tagsSelectedContainer.removeChild(tag);
         });
         tag.appendChild(removeButton);
         tagsSelectedContainer.appendChild(tag);
       }
+    }
+
+    //remove the selected class for the click event on the custom-li class
+    function removefilter() {
+      const removeButtons = document.querySelectorAll(".remove-tag-button");
+      const list = document.querySelectorAll(".custom-li");
+      removeButtons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          list.forEach((tag) => {
+            if (tag.classList.contains("selectedList")) {
+              tag.classList.remove("selectedList");
+            }
+          });
+        });
+      });
     }
   }
 }

@@ -1,29 +1,36 @@
-const styles = document.querySelectorAll(
-  ".filter-appliances, .filter-ingredients, .filter-ustensils"
-);
+export function filterTagsSelected() {
+  const tags = document.querySelectorAll(".custom-li");
 
-styles.forEach((style) => {
-  let isRounded = false;
-
-  style.addEventListener("click", function () {
-    if (isRounded) {
-      style.style.borderRadius = "10px";
-    } else {
-      style.style.borderRadius = "10px 10px 0 0";
-    }
-    isRounded = !isRounded;
+  tags.forEach((tag) => {
+    tag.addEventListener("click", (event) => {
+      const search = event.target.textContent.toLowerCase();
+      const elements = document.querySelectorAll(".global");
+      toggleSelection(tag, search, elements);
+    });
   });
-});
-function filterRecipesByTag(tagType, selectedTag) {
-  const recipeCards = document.querySelectorAll(".global");
 
-  recipeCards.forEach((card) => {
-    const tags = card.querySelector(`.${tagType}`).textContent;
+  function toggleSelection(tag, mot, elem) {
+    const tagListClass = tag.classList.contains("selectedList");
 
-    if (tags.includes(selectedTag) || selectedTag === "Tous") {
-      card.style.display = "block";
+    if (!tagListClass) {
+      tag.classList.add("selectedList"); // Sélectionnez l'élément
     } else {
-      card.style.display = "none";
+      tag.classList.remove("selectedList");
     }
-  });
+
+    // Parcourez les éléments et appliquez la logique de filtrage
+    for (let i = 0; i < elem.length; i++) {
+      if (tag.classList.contains("selectedList")) {
+        // Si l'élément est sélectionné, afficher seulement les correspondances
+        if (elem[i].textContent.toLowerCase().includes(mot)) {
+          elem[i].style.display = "block";
+        } else {
+          elem[i].style.display = "none";
+        }
+      } else {
+        // Sinon, tout afficher
+        elem[i].style.display = "block";
+      }
+    }
+  }
 }
