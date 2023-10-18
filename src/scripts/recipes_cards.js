@@ -1,16 +1,13 @@
 export async function getDataJson() {
+  // recover data from Json file
   const response = await fetch("data/recipes.json");
   const data = await response.json();
   const recipes = data.recipes;
-
+  // Create Dom elements and iterate throught recipes
   for (let i = 0; i < recipes.length; i++) {
     const cards = recipes[i];
-
     const globalDiv = document.createElement("div");
     globalDiv.className = "global";
-    globalDiv.setAttribute("data-category", JSON.stringify(cards.ingredients));
-    globalDiv.setAttribute("data-category", JSON.stringify(cards.appliances));
-    globalDiv.setAttribute("data-category", JSON.stringify(cards.ustensils));
 
     const imgElem = document.createElement("img");
     imgElem.src = `assets/photos/${cards.image}`;
@@ -26,13 +23,13 @@ export async function getDataJson() {
     titleCard.innerText = cards.name;
 
     const titleRecipe = document.createElement("h4");
-    titleRecipe.innerText = "RECETTE";
+    titleRecipe.innerText = "RECETTE ";
 
     const recipe = document.createElement("p");
-    recipe.innerText = cards.description;
+    recipe.innerHTML = `${cards.description} <br> <i>Ustensils: ${cards.ustensils} et Appareils : ${cards.appliance} </i>`;
 
     const titleIngredient = document.createElement("h4");
-    titleIngredient.innerText = "INGRÉDIENTS";
+    titleIngredient.innerText = "INGRÉDIENTS ";
 
     const ingredientList = document.createElement("ul");
     ingredientList.className = "global-ing";
@@ -41,19 +38,18 @@ export async function getDataJson() {
       const ingredientItem = document.createElement("li");
 
       let ingredientText = ingredient.ingredient;
-
+      // make the text for ingredient here, the unit and quantity
       if (ingredient.quantity) {
-        ingredientText += `: <span>${ingredient.quantity}`;
+        ingredientText += `: <span>${ingredient.quantity} `;
         if (ingredient.unit) {
-          ingredientText += ` ${ingredient.unit}`;
+          ingredientText += ` ${ingredient.unit} `;
         }
         ingredientText += `</span>`;
       }
-
       ingredientItem.innerHTML = ingredientText;
       ingredientList.appendChild(ingredientItem);
     }
-
+    //structure with parents elements
     detailsDiv.appendChild(titleCard);
     detailsDiv.appendChild(titleRecipe);
     detailsDiv.appendChild(recipe);
@@ -73,4 +69,5 @@ export async function getDataJson() {
   }
 }
 
+//call the function
 getDataJson();

@@ -155,6 +155,7 @@ function filterAppliances() {
     }
     isRounded = !isRounded;
   });
+  filterTagsSelected();
 }
 
 export function filterUstensils() {
@@ -225,6 +226,8 @@ export function filterUstensils() {
     }
     isRounded = !isRounded;
   });
+  tags();
+  filterTagsSelected();
 }
 
 export function tags() {
@@ -233,14 +236,31 @@ export function tags() {
   const ustensilsDropdown = document.querySelector(".filter-ustensils");
   const tagsSelectedContainer = document.getElementById("tags-selected");
 
-  ingredientsDropdown.addEventListener("click", createTag);
-  appliancesDropdown.addEventListener("click", createTag);
-  ustensilsDropdown.addEventListener("click", createTag);
+  ingredientsDropdown.addEventListener("click", (event) =>
+    createTag(event, tagsSelectedContainer)
+  );
+  appliancesDropdown.addEventListener("click", (event) =>
+    createTag(event, tagsSelectedContainer)
+  );
+  ustensilsDropdown.addEventListener("click", (event) =>
+    createTag(event, tagsSelectedContainer)
+  );
 
-  function createTag(event) {
-    if (event.target.classList.contains("custom-li")) {
-      const selectedValue = event.target.textContent;
-      if (selectedValue) {
+  createTag(null, tagsSelectedContainer);
+}
+
+export function createTag(event, tagsSelectedContainer) {
+  if (event && event.target.classList.contains("custom-li")) {
+    const selectedValue = event.target.textContent;
+    if (selectedValue) {
+      // Vérifiez si le tag est déjà présent
+      const isTagAlreadySelected = Array.from(
+        tagsSelectedContainer.children
+      ).some((tag) => {
+        return tag.textContent.trim() === selectedValue.trim();
+      });
+
+      if (!isTagAlreadySelected) {
         const tag = document.createElement("div");
         tag.className = "tag";
         tag.innerHTML = `${selectedValue} `;
@@ -254,23 +274,19 @@ export function tags() {
         tagsSelectedContainer.appendChild(tag);
       }
     }
-
-    //remove the selected class for the click event on the custom-li class
-    function removefilter() {
-      const removeButtons = document.querySelectorAll(".remove-tag-button");
-      const list = document.querySelectorAll(".custom-li");
-      removeButtons.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          list.forEach((tag) => {
-            if (tag.classList.contains("selectedList")) {
-              tag.classList.remove("selectedList");
-            }
-          });
-        });
-      });
-    }
   }
+  const removeButtons = document.querySelectorAll(".remove-tag-button");
+  const list = document.querySelectorAll(".custom-li");
+  removeButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      list.forEach((tag) => {
+        if (tag.classList.contains("selectedList")) {
+          tag.classList.remove("selectedList");
+        }
+      });
+    });
+  });
+  filterTagsSelected();
 }
 
 getFilterJson();
-tags();
