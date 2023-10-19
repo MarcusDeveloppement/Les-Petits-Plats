@@ -104,10 +104,10 @@ function filterIngredients() {
 function filterAppliances() {
   // select html element
   const filterAppliances = document.querySelector(".filter-appliances");
-  //Stock appliance
+  //Store appliance
   const allAppliances = new Set();
 
-  //go through the the recipe and tale information about appliances
+  //go through the the recipe and take information about appliances
   recipes.forEach((recipe) => {
     allAppliances.add(recipe.appliance);
   });
@@ -117,12 +117,15 @@ function filterAppliances() {
   ulAppliances.className = "custom-ul";
   ulAppliances.id = "mes-appareils";
 
+  //make a field for filter appliances
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Recherche d'appareils";
   searchInput.className = "search-input";
+  //add input to the list
   ulAppliances.appendChild(searchInput);
 
+  //function for filter appliances list depending on the search
   function filterList() {
     const inputValue = searchInput.value.toLowerCase();
     const liElements = ulAppliances.querySelectorAll(".custom-li");
@@ -136,16 +139,21 @@ function filterAppliances() {
       }
     });
   }
+
+  //add listener for input
   searchInput.addEventListener("input", filterList);
 
+  //add appliances in the list
   allAppliances.forEach((appliance) => {
     const liAppliance = document.createElement("li");
     liAppliance.className = "custom-li";
     liAppliance.textContent = appliance;
     ulAppliances.appendChild(liAppliance);
   });
+  //add in the <ul>
   filterAppliances.appendChild(ulAppliances);
 
+  //add class "visible"
   function toggleApplianceList() {
     ulAppliances.classList.toggle("visible");
   }
@@ -170,29 +178,37 @@ function filterAppliances() {
     }
     isRounded = !isRounded;
   });
+
+  //call function
   filterTagsSelected();
 }
 
+//filter ustensils and display ustensils available
 export function filterUstensils() {
   const filterUstensils = document.querySelector(".filter-ustensils");
+  //store ustensils
   const allUstensils = new Set();
 
+  //browse the recipe and collect ustensils
   recipes.forEach((recipe) => {
     recipe.ustensils.forEach((ustensil) => {
       allUstensils.add(ustensil);
     });
   });
 
+  //make a list for display ustensils
   const ulUstensils = document.createElement("ul");
   ulUstensils.className = "custom-ul";
   ulUstensils.id = "mes-ustensils";
 
+  //field input for filter ustensils
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Recherche";
   searchInput.className = "search-input";
   ulUstensils.appendChild(searchInput);
 
+  //function for filter ustensils list based on search
   function filterList() {
     const inputValue = searchInput.value.toLowerCase();
     const liElements = ulUstensils.querySelectorAll(".custom-li");
@@ -208,6 +224,7 @@ export function filterUstensils() {
   }
   searchInput.addEventListener("input", filterList);
 
+  //add ustensils to the <ul> list
   allUstensils.forEach((ustensil) => {
     const liUstensil = document.createElement("li");
     liUstensil.className = "custom-li";
@@ -221,6 +238,7 @@ export function filterUstensils() {
     ulUstensils.classList.toggle("visible");
   }
 
+  //listener to change the display
   const titleUstensil = document.createElement("h4");
   titleUstensil.className = "title-ustensil";
   titleUstensil.innerHTML = `Ustensiles <span><i class="fa-solid fa-chevron-down"></i></span>`;
@@ -241,6 +259,8 @@ export function filterUstensils() {
     }
     isRounded = !isRounded;
   });
+
+  //call functions
   tags();
   filterTagsSelected();
 }
