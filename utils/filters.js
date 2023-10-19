@@ -1,12 +1,14 @@
 import { filterTagsSelected } from "../src/scripts/index.js";
-
+//recipes stock
 let recipes = [];
 
+// recover data
 async function getFilterJson() {
   try {
     const response = await fetch("data/recipes.json");
     const data = await response.json();
     recipes = data.recipes;
+    //call the dunction after data charging
     filterIngredients();
     filterAppliances();
     filterUstensils();
@@ -19,25 +21,30 @@ async function getFilterJson() {
 }
 
 function filterIngredients() {
+  //select html class
   const filterIngredients = document.querySelector(".filter-ingredients");
+  //Create elements for store ingredients
   const allIngredients = new Set();
-
+  // browse the recipe and take ingredients
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredientObj) => {
       allIngredients.add(ingredientObj.ingredient);
     });
   });
 
+  // make a ingredient drop menu
   const ulIngredients = document.createElement("ul");
   ulIngredients.className = "custom-ul";
   ulIngredients.id = "mes-ingredients";
 
+  // make a search field
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Recherche";
   searchInput.className = "search-input";
   ulIngredients.appendChild(searchInput);
 
+  //ingredients filter based on user input
   function filterList() {
     const inputValue = searchInput.value.toLowerCase();
     const liElements = ulIngredients.querySelectorAll(".custom-li");
@@ -52,21 +59,24 @@ function filterIngredients() {
     });
   }
 
+  // add listener for the search field
   searchInput.addEventListener("input", filterList);
 
+  // create list elements for ingredients
   allIngredients.forEach((ingredient) => {
     const liIngredient = document.createElement("li");
     liIngredient.className = "custom-li";
     liIngredient.textContent = ingredient;
     ulIngredients.appendChild(liIngredient);
   });
-
   filterIngredients.appendChild(ulIngredients);
 
+  //display or hide the elements list
   function toggleIngredientList() {
     ulIngredients.classList.toggle("visible");
   }
 
+  //create drop elements with title and arrow down
   const titleIngredient = document.createElement("h4");
   titleIngredient.className = "title-ingredient";
   titleIngredient.innerHTML = `Ingrédients <span><i class="fa-solid fa-chevron-down"></i></span>`;
@@ -87,17 +97,22 @@ function filterIngredients() {
     }
     isRounded = !isRounded;
   });
+  //call function manage tags select
   filterTagsSelected();
 }
 
 function filterAppliances() {
+  // select html element
   const filterAppliances = document.querySelector(".filter-appliances");
+  //Stock appliance
   const allAppliances = new Set();
 
+  //go through the the recipe and tale information about appliances
   recipes.forEach((recipe) => {
     allAppliances.add(recipe.appliance);
   });
 
+  //make a liste for the creation of dropdown menu
   const ulAppliances = document.createElement("ul");
   ulAppliances.className = "custom-ul";
   ulAppliances.id = "mes-appareils";
@@ -231,11 +246,14 @@ export function filterUstensils() {
 }
 
 export function tags() {
+  // dropdown menu elements select
   const ingredientsDropdown = document.querySelector(".filter-ingredients");
   const appliancesDropdown = document.querySelector(".filter-appliances");
   const ustensilsDropdown = document.querySelector(".filter-ustensils");
+  // location where the tags display
   const tagsSelectedContainer = document.getElementById("tags-selected");
 
+  //listener for drop down menu
   ingredientsDropdown.addEventListener("click", (event) =>
     createTag(event, tagsSelectedContainer)
   );
@@ -246,24 +264,29 @@ export function tags() {
     createTag(event, tagsSelectedContainer)
   );
 
+  //call tags list select
   createTag(null, tagsSelectedContainer);
 }
 
+//create tags function depend on the element select
 export function createTag(event, tagsSelectedContainer) {
   if (event && event.target.classList.contains("custom-li")) {
     const selectedValue = event.target.textContent;
+
     if (selectedValue) {
-      // Vérifiez si le tag est déjà présent
+      //check if the tag is already on the tags list
       const isTagAlreadySelected = Array.from(
         tagsSelectedContainer.children
       ).some((tag) => {
         return tag.textContent.trim() === selectedValue.trim();
       });
-
+      // if the tag is not selected createa new tag
       if (!isTagAlreadySelected) {
         const tag = document.createElement("div");
         tag.className = "tag";
         tag.innerHTML = `${selectedValue} `;
+
+        //add a remove button
         const removeButton = document.createElement("button");
         removeButton.className = "remove-tag-button";
         removeButton.innerHTML = `<i class="fa-solid fa-x"></i>`;
@@ -275,6 +298,7 @@ export function createTag(event, tagsSelectedContainer) {
       }
     }
   }
+  // event for the remove button
   const removeButtons = document.querySelectorAll(".remove-tag-button");
   const list = document.querySelectorAll(".custom-li");
   removeButtons.forEach((btn) => {
@@ -286,6 +310,8 @@ export function createTag(event, tagsSelectedContainer) {
       });
     });
   });
+
+  //update tags list call after import
   filterTagsSelected();
 }
 

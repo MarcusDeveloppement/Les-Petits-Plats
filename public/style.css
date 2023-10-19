@@ -262,3 +262,7 @@ h4 {
   display: flex;
   align-items: center;
 }
+
+.fa-solid {
+  cursor: pointer;
+}
