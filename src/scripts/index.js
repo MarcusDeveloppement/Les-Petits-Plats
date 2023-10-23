@@ -1,3 +1,4 @@
+//filter tags according to list selection
 export function filterTagsSelected() {
   // Sélect elements
   const tags = document.querySelectorAll(".custom-li");
