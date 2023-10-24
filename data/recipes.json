@@ -264,7 +264,7 @@
       "time": 50,
       "description": "Étaler la pate dans les moules à tartelette. Faire cuire la pate 30 minutes. Découper le chocolat en morceau et le faire chauffer, y ajouter la crème liquide, ajouter le beurre et remuer jusqu'à avoir une pâte homogène. Verser la pate sur les tartelettes. Couper les fraises en 2 et les positionner sur ",
       "appliance": "Four",
-      "ustensils": ["moule à tartelettes (6)", "casserole"]
+      "ustensils": ["moule à tartelettes", "casserole"]
     },
     {
       "id": 8,
@@ -374,7 +374,7 @@
       "time": 60,
       "description": "Commencer par cuire les pommes de terre dans l'eau bouillante. Puis épluchez les et coupez les en rondelles. Émincer les oignons puis les faire dorer dans du beurre. Ajouter le jambon fumé coupé en en morceaux ainsi que les pommes de terres. Salez, poivrez à votre gout ( et celui de vos convives ) Laissez cuisiner durant environ 10 minutes puis ajouter le vin blanc. Après 5 minutes, mettre le tout dans un plat à gratin. Coupez le reblochon, soit en tranches, soit le couper en 2 dans le sens de l'épaisseur et recouvrir les pommes de terre. Cuire au four (environ 220°) durant 25 minutes. C'est prêt !",
       "appliance": "Four",
-      "ustensils": ["plat à gratin", "couteau", "Économe"]
+      "ustensils": ["plat à gratin", "couteau", "econome"]
     },
     {
       "id": 11,
@@ -445,7 +445,7 @@
       "time": 40,
       "description": "Éplucher les fruits et les couper en morceaux, les mettre dans une casserole en ajoutant l'eau et le sucre vanillé. Laisser cuire 15 minutes en remuant régulièrement.",
       "appliance": "Casserole",
-      "ustensils": ["couteau", "économe"]
+      "ustensils": ["couteau", "econome"]
     },
     {
       "id": 13,

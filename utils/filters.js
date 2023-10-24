@@ -1,4 +1,10 @@
 import { filterTagsSelected } from "../src/scripts/index.js";
+import { tags, createTag } from "./tags_appearance.js";
+import {
+  styleAppliances,
+  styleIngredient,
+  styleUstensils,
+} from "./style_dropMenu.js";
 //recipes stock
 let recipes = [];
 
@@ -8,7 +14,7 @@ async function getFilterJson() {
     const response = await fetch("data/recipes.json");
     const data = await response.json();
     recipes = data.recipes;
-    //call the dunction after data charging
+    //call the function after data charging
     filterIngredients();
     filterAppliances();
     filterUstensils();
@@ -84,19 +90,8 @@ function filterIngredients() {
 
   filterIngredients.insertBefore(titleIngredient, ulIngredients);
 
-  //************************** style effect on click*************************
-  const test = document.querySelector(".title-ingredient");
-  const div = document.querySelector(".filter-ingredients");
-  let isRounded = false;
-
-  test.addEventListener("click", function () {
-    if (isRounded) {
-      div.style.borderRadius = "10px";
-    } else {
-      div.style.borderRadius = "10px 10px 0 0";
-    }
-    isRounded = !isRounded;
-  });
+  //function style
+  styleIngredient();
   //call function manage tags select
   filterTagsSelected();
 }
@@ -165,20 +160,8 @@ function filterAppliances() {
 
   filterAppliances.insertBefore(titleAppliance, ulAppliances);
 
-  // **************************style effect on click***************************
-  const test = document.querySelector(".title-appliance");
-  const div = document.querySelector(".filter-appliances");
-  let isRounded = false;
-
-  test.addEventListener("click", function () {
-    if (isRounded) {
-      div.style.borderRadius = "10px";
-    } else {
-      div.style.borderRadius = "10px 10px 0 0";
-    }
-    isRounded = !isRounded;
-  });
-
+  // call style function
+  styleAppliances();
   //call function
   filterTagsSelected();
 }
@@ -246,93 +229,11 @@ export function filterUstensils() {
 
   filterUstensils.insertBefore(titleUstensil, ulUstensils);
 
-  // ********************style effect on click************************
-  const test = document.querySelector(".title-ustensil");
-  const div = document.querySelector(".filter-ustensils");
-  let isRounded = false;
-
-  test.addEventListener("click", function () {
-    if (isRounded) {
-      div.style.borderRadius = "10px";
-    } else {
-      div.style.borderRadius = "10px 10px 0 0";
-    }
-    isRounded = !isRounded;
-  });
-
+  // call function style
+  styleUstensils();
   //call functions
-  tags();
   filterTagsSelected();
 }
-
-export function tags() {
-  // dropdown menu elements select
-  const ingredientsDropdown = document.querySelector(".filter-ingredients");
-  const appliancesDropdown = document.querySelector(".filter-appliances");
-  const ustensilsDropdown = document.querySelector(".filter-ustensils");
-  // location where the tags display
-  const tagsSelectedContainer = document.getElementById("tags-selected");
-
-  //listener for drop down menu
-  ingredientsDropdown.addEventListener("click", (event) =>
-    createTag(event, tagsSelectedContainer)
-  );
-  appliancesDropdown.addEventListener("click", (event) =>
-    createTag(event, tagsSelectedContainer)
-  );
-  ustensilsDropdown.addEventListener("click", (event) =>
-    createTag(event, tagsSelectedContainer)
-  );
-
-  //call tags list select
-  createTag(null, tagsSelectedContainer);
-}
-
-//create tags function depend on the element select
-export function createTag(event, tagsSelectedContainer) {
-  if (event && event.target.classList.contains("custom-li")) {
-    const selectedValue = event.target.textContent;
-
-    if (selectedValue) {
-      //check if the tag is already on the tags list
-      const isTagAlreadySelected = Array.from(
-        tagsSelectedContainer.children
-      ).some((tag) => {
-        return tag.textContent.trim() === selectedValue.trim();
-      });
-      // if the tag is not selected createa new tag
-      if (!isTagAlreadySelected) {
-        const tag = document.createElement("div");
-        tag.className = "tag";
-        tag.innerHTML = `${selectedValue} `;
-
-        //add a remove button
-        const removeButton = document.createElement("button");
-        removeButton.className = "remove-tag-button";
-        removeButton.innerHTML = `<i class="fa-solid fa-x"></i>`;
-        removeButton.addEventListener("click", () => {
-          tagsSelectedContainer.removeChild(tag);
-        });
-        tag.appendChild(removeButton);
-        tagsSelectedContainer.appendChild(tag);
-      }
-    }
-  }
-  // event for the remove button
-  const removeButtons = document.querySelectorAll(".remove-tag-button");
-  const list = document.querySelectorAll(".custom-li");
-  removeButtons.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      list.forEach((tag) => {
-        if (tag.classList.contains("selectedList")) {
-          tag.classList.remove("selectedList");
-        }
-      });
-    });
-  });
-
-  //update tags list call after import
-  filterTagsSelected();
-}
-
+tags();
+createTag();
 getFilterJson();
