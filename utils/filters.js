@@ -167,7 +167,7 @@ function filterAppliances() {
 }
 
 //filter ustensils and display ustensils available
-export function filterUstensils() {
+function filterUstensils() {
   const filterUstensils = document.querySelector(".filter-ustensils");
   //store ustensils
   const allUstensils = new Set();
@@ -234,6 +234,7 @@ export function filterUstensils() {
   //call functions
   filterTagsSelected();
 }
+
 tags();
 createTag();
 getFilterJson();
